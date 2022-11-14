@@ -55,7 +55,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="oper : ${app.operators}">
+            <tr th:each="oper :${app.operators}">
                 <form th:action="@{'/unassignoperator'}" method="post">
                     <input type="hidden" name="operatorId" th:value="${oper.id}">
                     <input type="hidden" name="applicationId" th:value="${app.id}">
