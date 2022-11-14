@@ -138,4 +138,30 @@ public class MainController {
 
         return "redirect:/";
     }
+
+    @PostMapping(value = "/unassignoperator")
+    public String unassignOperator(@RequestParam(name = "applicationId") Long applicationId,
+                                 @RequestParam(name = "operatorId") Long operatorId) {
+
+        Operators oper = operatorService.getOperator(operatorId);
+        if (oper != null) {
+
+            ApplicationRequest application = applicationService.getApplication(applicationId);
+            if (application != null) {
+
+                List<Operators> operators = application.getOperators();
+                if (operators == null) {
+                    operators = new ArrayList<>();
+                }
+                operators.remove(oper);
+                application.setOperators(operators);
+                applicationService.saveApplication(application);
+
+                return "redirect:/details/" + applicationId;
+            }
+
+        }
+
+        return "redirect:/";
+    }
 }
