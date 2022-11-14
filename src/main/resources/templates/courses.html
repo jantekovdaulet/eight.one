@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layout/main">
+<body>
+<div layout:fragment="content">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:text="${'+ '} + #{button.add.course}">
+    </button>
+    <br>
+    <br>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{button.add.course}"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{'/addcourse'}" method="post" class="d-flex" role="search">
+                        <div class="modal-body">
+                            <input class="form-control me-2 email" type="text" th:placeholder="#{label.course}" aria-label="Search"
+                                   name="name">
+                            <br>
+                            <textarea class="form-control" th:placeholder="#{label.description}" id="floatingTextarea2"
+                                      style="height: 100px" name="description"></textarea>
+                            <br>
+                            <input class="form-control me-2 email" type="number" th:placeholder="#{label.price}" aria-label="Search"
+                                   name="price">
+                            <br>
+                            <button onclick="reg()" class="btn btn-outline-success moibtn" type="submit" th:text="#{button.add}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col" th:text="#{label.name}"></th>
+            <th scope="col" th:text="#{label.description}"></th>
+            <th scope="col" th:text="#{label.price}"></th>
+            <th scope="col" th:text="#{button.edit}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <th scope="row" th:text="${course.id}"></th>
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.description}"></td>
+            <td th:text="${course.price} + ' USD'"></td>
+            <td><a  th:href="@{'/editcourse/' + ${course.id}}" th:text="#{button.edit}" class="btn btn-primary" href="#" role="button"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

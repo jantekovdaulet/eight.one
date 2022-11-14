@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layout/main">
+<body>
+<div layout:fragment="content">
+    <form th:action="@{'/addapp'}" method="post" class="d-flex" role="search">
+        <div class="modal-body">
+            <input class="form-control me-2 email" type="text" th:placeholder="#{label.user.name}" aria-label="Search"
+                   name="userName">
+            <br>
+            <select name="courseId" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option th:each="course : ${courses}" th:text="${course.name}" th:value="${course.id}"></option>
+            </select>
+            <br>
+            <input class="form-control me-2 email" type="text" th:placeholder="#{label.phone}" aria-label="Search"
+                   name="phone">
+            <br>
+            <textarea class="form-control" th:placeholder="#{label.commentary}" id="floatingTextarea2"
+                      style="height: 100px" name="commentary"></textarea>
+            <br>
+            <button onclick="reg()" class="btn btn-outline-success moibtn" type="submit" th:text="#{label.add.applications}"></button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

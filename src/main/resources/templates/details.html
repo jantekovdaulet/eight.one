@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layout/main">
+<body>
+<div layout:fragment="content">
+    <div style="display: flex; justify-content: center">
+        <h3 th:if="${!app.handled}" style="color: red">*** <span th:text="#{label.new.no.handled.application}"></span>
+            ***</h3>
+        <h3 th:unless="${!app.handled}" style="color: green"><span th:text="#{label.handled.application}"></span></h3>
+    </div>
+    <br>
+    <form th:action="@{'/handleapp'}" method="post" class="d-flex" role="search">
+        <div class="modal-body">
+            <input type="hidden" name="id" th:value="${app.id}">
+            <input readonly
+                   class="form-control me-2 email" type="text" th:value="${app.userName}"
+                   th:placeholder="#{label.user.name}" aria-label="Search"
+                   name="userName">
+            <br>
+            <select disabled name="courseName" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option th:text="${app.course.name} + ' - ' + ${app.course.price} + ' USD'"></option>
+            </select>
+            <br>
+            <input readonly class="form-control me-2 email" type="text" th:value="${app.phone}"
+                   th:placeholder="#{label.phone}" aria-label="Search"
+                   name="phone">
+            <br>
+            <textarea readonly class="form-control" th:text="${app.commentary}" th:placeholder="#{label.commentary}"
+                      id="floatingTextarea2"
+                      style="height: 100px" name="commentary"></textarea>
+            <br>
+            <!--            <h5>Выбранные операторы: </h5>-->
+            <!--            <table class="table table-striped">-->
+            <!--                <thead>-->
+            <!--                <tr>-->
+            <!--                    <th scope="col">Choose</th>-->
+            <!--                    <th scope="col">Name</th>-->
+            <!--                    <th scope="col">Surname</th>-->
+            <!--                    <th scope="col">Department</th>-->
+            <!--                </tr>-->
+            <!--                </thead>-->
+            <!--                <tbody>-->
+            <!--                <tr th:each="oper : ${operators}">-->
+            <!--                    <form th:action="@{'/unsignoperator'}" method="post">-->
+            <!--                        <input type="hidden" name="operatorId" th:value="${oper.id}">-->
+            <!--                        <input type="hidden" name="applicationId" th:value="${app.id}">-->
+            <!--                        <th scope="row" width="10%">-->
+            <!--                            <button class="btn btn-danger btn-sm">-</button>-->
+            <!--                        </th>-->
+            <!--                        <td th:text="${oper.name}"></td>-->
+            <!--                        <td th:text="${oper.surname}"></td>-->
+            <!--                        <td th:text="${oper.department}"></td>-->
+            <!--                    </form>-->
+            <!--                </tr>-->
+            <!--                </tbody>-->
+            <!--            </table>-->
+            <br>
+            <br>
+            <br>
+            <button onclick="reg()" class="btn btn-outline-success" type="submit"
+                    th:if="${!app.handled}" th:text="#{label.handle}"></button>
+        </div>
+    </form>
+    <br>
+    <form th:action="@{'/deleteapp'}" method="post">
+        <input type="hidden" name="id" th:value="${app.id}">
+        <button onclick="reg()" class="btn btn-outline-danger moibtn" type="submit"
+                th:text="#{label.delete}"></button>
+    </form>
+    <br>
+    <h5>Appoint an Operator: </h5>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Choose</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Department</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="oper : ${operators}">
+            <form th:action="@{'/assignoperator'}" method="post">
+                <input type="hidden" name="operatorId" th:value="${oper.id}">
+                <input type="hidden" name="applicationId" th:value="${app.id}">
+                <th scope="row" width="10%">
+                    <button type="submit" class="btn btn-success btn-sm">+</button>
+                </th>
+                <td th:text="${oper.name}"></td>
+                <td th:text="${oper.surname}"></td>
+                <td th:text="${oper.department}"></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+    <p th:text="${app.operators}"></p>
+</div>
+</body>
+</html>

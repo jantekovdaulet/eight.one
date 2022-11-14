@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+      layout:decorate="layout/main">
+<body>
+<div layout:fragment="content">
+    <form th:action="@{'/savecourse'}" method="post" class="d-flex" role="search">
+        <div class="modal-body">
+            <input type="hidden" name="id" th:value="${course.id}">
+            <input class="form-control me-2 email" type="text" th:value="${course.name}"
+                   th:placeholder="#{label.name}" aria-label="Search"
+                   name="name">
+            <br>
+            <textarea class="form-control" th:text="${course.description}" th:placeholder="#{label.description}"
+                      id="floatingTextarea2"
+                      style="height: 100px" name="description"></textarea>
+            <br>
+            <input class="form-control me-2 email" type="number" th:value="${course.price}"
+                   th:placeholder="#{label.price}" aria-label="Search"
+                   name="price">
+            <br>
+            <button onclick="reg()" class="btn btn-outline-success moibtn" type="submit"
+                    th:text="#{button.save}"></button>
+        </div>
+    </form>
+    <br>
+    <form th:action="@{'/deletecourse'}" method="post">
+        <input type="hidden" name="id" th:value="${course.id}">
+        <button onclick="reg()" class="btn btn-outline-danger moibtn" type="submit" th:text="#{label.delete}"></button>
+    </form>
+</div>
+</body>
+</html>
